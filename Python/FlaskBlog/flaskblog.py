@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '2j6k5h1j2k1jk1da5s1da6vcdrt'
 
+
 posts = [
     {
         'author': 'Corey',
