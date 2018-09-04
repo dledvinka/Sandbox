@@ -103,3 +103,7 @@ ENV/
 .idea/
 *.iml
 .DS_Store
+
+# user profile images
+flaskblog/static/profile_pics/*.*
+!default.jpg
