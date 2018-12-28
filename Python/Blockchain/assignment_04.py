@@ -1,37 +1,16 @@
-persons = [
-    {
-        'name': 'David',
-        'age': 34,
-        'hobbies': ['Programming', 'Sports']
-    },
-    {
-        'name': 'Luki',
-        'age': 2,
-        'hobbies': ['Playing', 'Sleeping']
-    },
-    {
-        'name': 'Eli',
-        'age': 6,
-        'hobbies': ['Playing', 'Drawing']
-    }
-]
+def power_of_two(num):
+    return num ** 2
 
-print('*' * 30)
-names = [person['name'] for person in persons]
-print(names)
 
-print('*' * 30)
-all_older = all([person['age'] > 20 for person in persons])
-print(all_older)
+def call_me(func, *numbers):
+    for num in numbers:
+        print('Result: {:-^20.0f}'.format(func(num)))
 
-print('*' * 30)
-persons_copied = [person.copy() for person in persons]
-persons_copied[0]['name'] = 'Max'
-print(persons)
-print(persons_copied)
 
-print('*' * 30)
-p1, p2, p3 = persons
-print(p1)
-print(p2)
-print(p3)
+call_me(power_of_two, 2)
+call_me(power_of_two, 3)
+call_me(power_of_two, 4)
+call_me(lambda num: num ** 2, 5)
+
+print('-' * 30)
+call_me(lambda num: num ** 2, 2, 3, 4, 5, )
