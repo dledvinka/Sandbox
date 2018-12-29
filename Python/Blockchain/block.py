@@ -1,10 +1,12 @@
 from time import time
 
+from printable import Printable
 
-class Block:
-    def __init__(self, index, previous_hash, transactions, proof, timestamp=None):
+
+class Block(Printable):
+    def __init__(self, index, previous_hash, transactions, proof, time=time()):
         self.index = index
         self.previous_hash = previous_hash
+        self.timestamp = time
         self.transactions = transactions
-        self.timestamp = time() if timestamp is None else timestamp
         self.proof = proof
