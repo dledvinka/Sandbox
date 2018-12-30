@@ -1,6 +1,6 @@
 from collections import OrderedDict
 
-from printable import Printable
+from utility.printable import Printable
 
 class Transaction(Printable):
     """A transaction which can be added to a block in the blockchain.
