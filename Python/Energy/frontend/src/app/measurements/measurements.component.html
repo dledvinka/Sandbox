@@ -1,0 +1,14 @@
+<p>
+  measurements works!
+</p>
+<table *ngIf="(measurements$ | async) as measurements">
+  <tr>
+    <th>Timestamp</th>
+    <th>Value</th>
+  </tr>
+  <tr *ngFor="let meas of measurements"> 
+    <td>{{meas.timestamp}}</td>
+    <td>{{meas.value}}</td>
+  </tr>
+</table>
+<button routerLink="/measurement" routerLinkActive="active">Create new</button>

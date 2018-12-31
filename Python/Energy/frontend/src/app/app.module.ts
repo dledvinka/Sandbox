@@ -5,11 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TestComponent } from './test/test.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MeasurementsComponent } from './measurements/measurements.component';
+import { MeasurementComponent } from './measurement/measurement.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    TestComponent,
+    MeasurementsComponent,
+    MeasurementComponent
   ],
   imports: [
     BrowserModule,
