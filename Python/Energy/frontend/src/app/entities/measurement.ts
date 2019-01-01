@@ -1,4 +1,8 @@
 export class Measurement {
-    timestamp: Date;
-    value: number;
+    id: number;
+    created: Date;
+    dateTaken: Date;
+    electricityHighRate: number;
+    electricityLowRate: number;
+    gas: number;
 }

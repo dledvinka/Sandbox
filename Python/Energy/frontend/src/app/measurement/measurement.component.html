@@ -3,6 +3,10 @@
 </p>
 <form (ngSubmit)="onSubmit()" #f="ngForm">
   <div class="form-group">
+    <label for="dateTaken">Date taken</label>
+    <input type="date" id="dateTaken" class="form-control" ngModel name="dateTaken" required>
+  </div>
+  <div class="form-group">
     <label for="eleHighRate">Electricity - high rate</label>
     <input type="number" id="eleHighRate" class="form-control" ngModel name="eleHighRate">
   </div>
