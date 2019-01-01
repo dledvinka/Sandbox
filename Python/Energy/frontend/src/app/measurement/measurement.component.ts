@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-measurement',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MeasurementComponent implements OnInit {
 
+  @ViewChild('f') form: NgForm;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSubmit(): void {
+    console.log(this.form);
   }
 
 }
