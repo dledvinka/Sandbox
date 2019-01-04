@@ -13,10 +13,10 @@
   <tr *ngFor="let meas of measurements"> 
     <td>{{meas.id}}</td>
     <td>{{meas.created}}</td>
-    <td>{{meas.dateTaken}}</td>
-    <td>{{meas.electricityHighRate}}</td>
-    <td>{{meas.electricityLowRate}}</td>
-    <td>{{meas.gas}}</td>
+    <td>{{meas.date_taken}}</td>
+    <td>{{meas.electricity_high_rate_kwh}}</td>
+    <td>{{meas.electricity_low_rate_kwh}}</td>
+		<td>{{meas.gas_m3}}</td>
   </tr>
 </table>
 <button routerLink="/measurement" routerLinkActive="active">Create new</button>
