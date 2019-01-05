@@ -3,7 +3,8 @@ import { NgForm } from '@angular/forms';
 import { Measurement } from '../entities/measurement';
 import { MeasurementService } from '../services/measurement.service';
 import { CommandResult } from '../entities/command-result';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-measurement',
@@ -14,23 +15,30 @@ export class MeasurementComponent implements OnInit {
 
   @ViewChild('f') form: NgForm;
   model: Measurement;
-  constructor(private measurementService: MeasurementService, private router: Router) { }
+  private id: Number;
+
+  constructor(
+    private measurementService: MeasurementService,
+    private router: Router,
+    private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
-    this.create();
-  }
 
-  create(): void {
-    this.model = new Measurement();
-  }
+    const idParam = this.route.snapshot.paramMap.get('id');
 
-  update(model: Measurement): void {
-    this.model = model;
+    if (idParam) {
+      this.id = Number(idParam);
+      this.measurementService.get(this.id)
+        .subscribe(data => {
+          this.model = data;
+        });
+    } else {
+      this.model = new Measurement();
+    }
   }
 
   onSubmit(): void {
-
-    console.log(this.form);
     this.model.date_taken = this.form.value['dateTaken'];
     this.model.electricity_high_rate_kwh = this.form.value['eleHighRate'];
     this.model.electricity_low_rate_kwh = this.form.value['eleLowRate'];
@@ -38,12 +46,14 @@ export class MeasurementComponent implements OnInit {
 
     console.log(this.model);
 
-    this.measurementService.insert(this.model).subscribe((cr: CommandResult) => {
-      if (cr.isOk) {
+    if (this.id) {
+      this.measurementService.update(this.model).subscribe(_ => {
         this.router.navigate(['/measurements']);
-      } else {
-        console.error(cr.message);
-      }
-    });
+      });
+    } else {
+      this.measurementService.insert(this.model).subscribe(_ => {
+        this.router.navigate(['/measurements']);
+      });
+    }
   }
 }

@@ -18,6 +18,10 @@ const routes: Routes = [
     component: MeasurementComponent
   },
   {
+    path: 'measurement/:id',
+    component: MeasurementComponent
+  },
+  {
     path: '',
     redirectTo: '/measurements',
     pathMatch: 'full'
@@ -25,7 +29,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
