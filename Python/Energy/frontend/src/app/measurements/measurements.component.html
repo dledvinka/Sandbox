@@ -1,22 +1,17 @@
-<p>
-  measurements works!
-</p>
-<table *ngIf="(measurements$ | async) as measurements">
-  <tr>
-    <th>Id</th>
-    <th>Created</th>
-    <th>Taken</th>
-    <th>Electricity (high rate)</th>
-    <th>Electricity (low rate)</th>
-    <th>Gas</th>
-  </tr>
-  <tr *ngFor="let meas of measurements"> 
-    <td>{{meas.id}}</td>
-    <td>{{meas.created}}</td>
-    <td>{{meas.date_taken}}</td>
-    <td>{{meas.electricity_high_rate_kwh}}</td>
-    <td>{{meas.electricity_low_rate_kwh}}</td>
-		<td>{{meas.gas_m3}}</td>
-  </tr>
-</table>
-<button routerLink="/measurement" routerLinkActive="active">Create new</button>
+<div class="container mt-3">
+  <table class="table" *ngIf="(measurements$ | async) as measurements">
+    <tr>
+      <th>Date taken</th>
+      <th>Electricity (high rate) [kWh]</th>
+      <th>Electricity (low rate) [kWh]</th>
+      <th>Gas [m<sup>3</sup>]</th>
+    </tr>
+    <tr *ngFor="let meas of measurements">
+      <td>{{meas.date_taken | date:'dd.MM.yyyy'}}</td>
+      <td>{{meas.electricity_high_rate_kwh}}</td>
+      <td>{{meas.electricity_low_rate_kwh}}</td>
+      <td>{{meas.gas_m3}}</td>
+    </tr>
+  </table>
+  <button class="btn btn-primary" routerLink="/measurement" routerLinkActive="active">Create new</button>
+</div>

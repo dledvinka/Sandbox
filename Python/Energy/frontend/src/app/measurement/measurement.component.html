@@ -1,22 +1,21 @@
-<p>
-  measurement works!
-</p>
-<form (ngSubmit)="onSubmit()" #f="ngForm">
-  <div class="form-group">
-    <label for="dateTaken">Date taken</label>
-    <input type="date" id="dateTaken" class="form-control" ngModel name="dateTaken" required>
-  </div>
-  <div class="form-group">
-    <label for="eleHighRate">Electricity - high rate</label>
-    <input type="number" id="eleHighRate" class="form-control" ngModel name="eleHighRate">
-  </div>
-  <div class="form-group">
-    <label for="eleLowRate">Electricity - low rate</label>
-    <input type="number" id="eleLowRate" class="form-control" ngModel name="eleLowRate">
-  </div>
-  <div class="form-group">
-    <label for="gas">Gas</label>
-    <input type="number" id="gas" class="form-control" ngModel name="gas">
-  </div>
-  <button class="btn btn-primary" type="sumbit">Submit</button>
-</form>
+<div class="container mt-3">
+  <form (ngSubmit)="onSubmit()" #f="ngForm">
+    <div class="form-group">
+      <label for="dateTaken">Date taken</label>
+      <input type="date" id="dateTaken" class="form-control" ngModel name="dateTaken" required>
+    </div>
+    <div class="form-group">
+      <label for="eleHighRate">Electricity (high rate) [kWh]</label>
+      <input type="number" id="eleHighRate" class="form-control" ngModel name="eleHighRate">
+    </div>
+    <div class="form-group">
+      <label for="eleLowRate">Electricity (low rate) [kWh]</label>
+      <input type="number" id="eleLowRate" class="form-control" ngModel name="eleLowRate">
+    </div>
+    <div class="form-group">
+      <label for="gas">Gas [m<sup>3</sup>]</label>
+      <input type="number" id="gas" class="form-control" ngModel name="gas">
+    </div>
+    <button class="btn btn-primary" type="sumbit">Submit</button>
+  </form>
+</div>

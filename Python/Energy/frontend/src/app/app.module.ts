@@ -8,13 +8,15 @@ import { TestComponent } from './test/test.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MeasurementsComponent } from './measurements/measurements.component';
 import { MeasurementComponent } from './measurement/measurement.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TestComponent,
     MeasurementsComponent,
-    MeasurementComponent
+    MeasurementComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
