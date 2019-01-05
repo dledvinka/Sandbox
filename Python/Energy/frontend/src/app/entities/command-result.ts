@@ -1,4 +1,4 @@
 export class CommandResult {
-    isOk: boolean;
-    message: string;
+  isOk: boolean;
+  message: string;
 }

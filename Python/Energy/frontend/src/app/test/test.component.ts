@@ -11,7 +11,7 @@ import { TestMessage } from './test-message';
 export class TestComponent implements OnInit {
 
   test$: Observable<TestMessage>;
-  
+
   constructor(private testService: TestService) { }
 
   ngOnInit() {
