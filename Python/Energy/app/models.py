@@ -17,8 +17,7 @@ class User(db.Model):
 class Measurement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    date_taken = db.Column(db.DateTime, nullable=False,
-                           index=True, default=datetime.utcnow)
+    date_taken = db.Column(db.Date, nullable=False, index=True)
     electricity_high_rate_kwh = db.Column(db.Float, nullable=False)
     electricity_low_rate_kwh = db.Column(db.Float, nullable=False)
     gas_m3 = db.Column(db.Float, nullable=False)

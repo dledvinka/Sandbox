@@ -55,15 +55,18 @@ def measurement():
         response = CommandResult(False, 'Required data is missing.')
         return jsonify(response), 400
 
-    model = Measurement()
-    # values['date_taken'] // TODO czdaled convert string to time
-    model.date_taken = datetime.utcnow()
-    model.electricity_high_rate_kwh = values['electricity_high_rate_kwh']
-    model.electricity_low_rate_kwh = values['electricity_low_rate_kwh']
-    model.gas_m3 = values['gas_m3']
-    model.user_id = User.query.get(1).id
+    format_str = '%Y-%m-%d' # The format
+    datetime_obj = datetime.strptime(values['date_taken'], format_str)
+    values['date_taken'] = datetime_obj.date()
+    
+    measurement_schema = MeasurementSchema(only=('date_taken', 'electricity_high_rate_kwh',
+                                           'electricity_low_rate_kwh', 'gas_m3'))
+    posted_model = measurement_schema.load(values)  
+    model = Measurement(**posted_model.data, user_id = User.query.get(1).id)
 
     db.session.add(model)
     db.session.commit()
 
-    return measurement_schema.jsonify(model), 201
+    created = MeasurementSchema().dump(model).data
+
+    return measurement_schema.jsonify(created), 201

@@ -1,8 +1,8 @@
 """measurements table
 
-Revision ID: c56b65d50105
+Revision ID: c2f8efb1c93a
 Revises: 282b898a0360
-Create Date: 2019-01-04 10:21:07.092864
+Create Date: 2019-01-05 19:04:25.747271
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c56b65d50105'
+revision = 'c2f8efb1c93a'
 down_revision = '282b898a0360'
 branch_labels = None
 depends_on = None
@@ -21,7 +21,7 @@ def upgrade():
     op.create_table('measurement',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('created', sa.DateTime(), nullable=False),
-    sa.Column('date_taken', sa.DateTime(), nullable=False),
+    sa.Column('date_taken', sa.Date(), nullable=False),
     sa.Column('electricity_high_rate_kwh', sa.Float(), nullable=False),
     sa.Column('electricity_low_rate_kwh', sa.Float(), nullable=False),
     sa.Column('gas_m3', sa.Float(), nullable=False),
