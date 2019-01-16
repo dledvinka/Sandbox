@@ -1,0 +1,26 @@
+<div class="container mt-3">
+  <h1>Supply points</h1>  
+  <table class="table" *ngIf="(supplyPoints$ | async) as supplyPoints">
+      <tr>
+        <th>Name</th>
+        <th style="width:30%">Actions</th>
+      </tr>
+      <tr *ngFor="let sp of supplyPoints">
+        <td>{{sp.name}}</td>
+        <td>
+          <span>
+            <a routerLink="/supply-point/{{sp.id}}/detail" routerLinkActive="active">
+              <i class="fas fa-pen fa-lg mr-2" ></i>
+            </a>
+            <a routerLink="/supply-point/{{sp.id}}/measurements" routerLinkActive="active">
+              <i class="fas fa-table fa-lg mr-2" ></i>
+            </a>
+            <a routerLink="/supply-point/{{sp.id}}/dashboard" routerLinkActive="active">
+              <i class="fas fa-chart-line fa-lg" ></i>
+            </a>
+          </span>
+        </td>
+      </tr>
+    </table>
+    <button class="btn btn-primary" routerLink="/measurement" routerLinkActive="active">Create new</button>
+  </div>

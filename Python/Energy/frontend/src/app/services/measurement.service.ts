@@ -20,7 +20,7 @@ export class MeasurementService {
 
   constructor(private http: HttpClient) { }
 
-  get_all(): Observable<Measurement[]> {
+  getAll(): Observable<Measurement[]> {
     const url = API_URL + '/measurements';
     return this.http
       .get<Measurement[]>(url).pipe(

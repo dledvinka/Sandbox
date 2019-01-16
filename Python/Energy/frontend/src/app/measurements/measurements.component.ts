@@ -3,7 +3,7 @@ import { MeasurementService } from '../services/measurement.service';
 import { Measurement } from '../entities/measurement';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -15,12 +15,14 @@ export class MeasurementsComponent implements OnInit {
 
   constructor(
     private measurementsService: MeasurementService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   measurements$: Observable<Measurement[]>;
 
   ngOnInit() {
-    this.measurements$ = this.measurementsService.get_all();
+    const supplyPointIdParam = this.route.snapshot.paramMap.get('id');
+    this.measurements$ = this.measurementsService.getAll();
   }
 
   onDelete(id: Number): void {

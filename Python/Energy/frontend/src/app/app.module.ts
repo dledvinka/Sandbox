@@ -9,6 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { MeasurementsComponent } from './measurements/measurements.component';
 import { MeasurementComponent } from './measurement/measurement.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SupplyPointsComponent } from './supply-points/supply-points.component';
+import { SupplyPointComponent } from './supply-point/supply-point.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { NavbarComponent } from './navbar/navbar.component';
     TestComponent,
     MeasurementsComponent,
     MeasurementComponent,
-    NavbarComponent
+    NavbarComponent,
+    SupplyPointsComponent,
+    SupplyPointComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
