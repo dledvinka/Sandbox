@@ -1,5 +1,5 @@
 <div class="container mt-3">
-  <form *ngIf="model" (ngSubmit)="onSubmit()" #f="ngForm">
+  <!-- <form *ngIf="model" (ngSubmit)="onSubmit()" #f="ngForm">
     <div class="form-group">
       <label for="dateTaken">Date taken</label>
       <input type="date" id="dateTaken" class="form-control" [ngModel]="model.date_taken" name="dateTaken" required>
@@ -17,5 +17,15 @@
       <input type="number" id="gas" class="form-control" [ngModel]="model.gas_m3" name="gas">
     </div>
     <button class="btn btn-primary" type="sumbit">Submit</button>
+  </form> -->
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+ 
+    <div *ngFor="let question of questions" class="form-row">
+      <app-question [question]="question" [form]="form"></app-question>
+    </div>
+ 
+    <div class="form-row">
+      <button type="submit" [disabled]="!form.valid">Save</button>
+    </div>
   </form>
 </div>

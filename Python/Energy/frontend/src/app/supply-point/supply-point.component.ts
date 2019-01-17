@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SupplyPointService } from '../services/supply-point.service';
 import { SupplyPointDetailDto } from '../entities/supply-point-detail-dto';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-supply-point',
@@ -10,6 +11,7 @@ import { SupplyPointDetailDto } from '../entities/supply-point-detail-dto';
 })
 export class SupplyPointComponent implements OnInit {
 
+  @ViewChild('f') form: NgForm;
   id: number;
   model: SupplyPointDetailDto;
 
@@ -20,9 +22,10 @@ export class SupplyPointComponent implements OnInit {
   ngOnInit() {
 
     const idParam = this.route.snapshot.paramMap.get('id');
+    const idParamValue: number = idParam ? Number(idParam) : undefined;
 
-    if (idParam) {
-      this.id = Number(idParam);
+    if (idParamValue && idParamValue !== 0) {
+      this.id = idParamValue;
       this.supplyPointService.get(this.id)
         .subscribe(data => {
           this.model = data;
@@ -33,21 +36,18 @@ export class SupplyPointComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // this.model.date_taken = this.form.value['dateTaken'];
-    // this.model.electricity_high_rate_kwh = this.form.value['eleHighRate'];
-    // this.model.electricity_low_rate_kwh = this.form.value['eleLowRate'];
-    // this.model.gas_m3 = this.form.value['gas'];
+    this.model.name = this.form.value['name'];
+    this.model.address = this.form.value['address'];
+    this.model.comment = this.form.value['comment'];
 
-    // console.log(this.model);
-
-    // if (this.id) {
-    //   this.measurementService.update(this.model).subscribe(_ => {
-    //     this.router.navigate(['/measurements']);
-    //   });
-    // } else {
-    //   this.measurementService.insert(this.model).subscribe(_ => {
-    //     this.router.navigate(['/measurements']);
-    //   });
-    // }
+    if (this.id) {
+      this.supplyPointService.update(this.model).subscribe(_ => {
+        this.router.navigate(['/supply-points']);
+      });
+    } else {
+      this.supplyPointService.insert(this.model).subscribe(_ => {
+        this.router.navigate(['/supply-points']);
+      });
+    }
   }
 }

@@ -9,10 +9,10 @@
       <th style="width:20%"></th>
     </tr>
     <tr *ngFor="let meas of measurements">
-      <td>{{meas.date_taken | date:'dd.MM.yyyy'}}</td>
-      <td>{{meas.electricity_high_rate_kwh}}</td>
-      <td>{{meas.electricity_low_rate_kwh}}</td>
-      <td>{{meas.gas_m3}}</td>
+      <td>{{meas.dateTaken | date:'dd.MM.yyyy'}}</td>
+      <td>{{meas.values[0].value}}</td>
+      <td>{{meas.values[1].value}}</td>
+      <td>{{meas.values[2].value}}</td>
       <td>
         <span>
           <a routerLink="/measurement/{{meas.id}}" routerLinkActive="active">
@@ -25,5 +25,5 @@
       </td>
     </tr>
   </table>
-  <button class="btn btn-primary" routerLink="/measurement" routerLinkActive="active">Create new</button>
+  <button class="btn btn-primary" routerLink="/supply-point/{{supplyPointId}}/measurement/0" routerLinkActive="active">Create new</button>
 </div>

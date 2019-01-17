@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { API_URL } from '../env';
-import { Measurement } from '../entities/measurement';
+import { MeasurementDto } from '../entities/measurement-dto';
 import { CommandResult } from '../entities/command-result';
-import { catchError } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -13,6 +13,53 @@ const httpOptions = {
   })
 };
 
+const measurements: MeasurementDto[] = [
+  {
+    id: 1,
+    supplyPointId: 1,
+    created: new Date(2018, 10, 1),
+    dateTaken: new Date(2018, 10, 1),
+    values: [
+      { id: 1, supplyPointMeasuredValueId: 1, value: 20000 },
+      { id: 2, supplyPointMeasuredValueId: 2, value: 40000 },
+      { id: 3, supplyPointMeasuredValueId: 3, value: 5000 }
+    ]
+  },
+  {
+    id: 2,
+    supplyPointId: 1,
+    created: new Date(2018, 11, 1),
+    dateTaken: new Date(2018, 11, 1),
+    values: [
+      { id: 4, supplyPointMeasuredValueId: 1, value: 22000 },
+      { id: 5, supplyPointMeasuredValueId: 2, value: 42000 },
+      { id: 6, supplyPointMeasuredValueId: 3, value: 5500 }
+    ]
+  },
+  {
+    id: 3,
+    supplyPointId: 1,
+    created: new Date(2018, 12, 1),
+    dateTaken: new Date(2018, 12, 1),
+    values: [
+      { id: 7, supplyPointMeasuredValueId: 1, value: 24000 },
+      { id: 8, supplyPointMeasuredValueId: 2, value: 44000 },
+      { id: 9, supplyPointMeasuredValueId: 3, value: 6000 }
+    ]
+  },
+  {
+    id: 4,
+    supplyPointId: 1,
+    created: new Date(2019, 1, 1),
+    dateTaken: new Date(2019, 1, 1),
+    values: [
+      { id: 10, supplyPointMeasuredValueId: 1, value: 26000 },
+      { id: 11, supplyPointMeasuredValueId: 2, value: 46000 },
+      { id: 12, supplyPointMeasuredValueId: 3, value: 6500 }
+    ]
+  }
+];
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,43 +67,45 @@ export class MeasurementService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Measurement[]> {
-    const url = API_URL + '/measurements';
-    return this.http
-      .get<Measurement[]>(url).pipe(
-        catchError(this.handleError)
-      );
+  getAll(supplyPointId: number): Observable<MeasurementDto[]> {
+    return of(measurements).pipe(delay(500));
+    // const url = API_URL + '/measurements';
+    // return this.http
+    //   .get<Measurement[]>(url).pipe(
+    //     catchError(this.handleError)
+    //   );
   }
 
-  get(id: Number): Observable<Measurement> {
-    const url = API_URL + '/measurement/' + id;
-    return this.http
-      .get<Measurement>(url).pipe(
-        catchError(this.handleError)
-      );
+  get(id: Number): Observable<MeasurementDto> {
+    return of(measurements.find((m) => m.id === id)).pipe(delay(500));
+    // const url = API_URL + '/measurement/' + id;
+    // return this.http
+    //   .get<Measurement>(url).pipe(
+    //     catchError(this.handleError)
+    //   );
   }
 
-  delete(id: Number): Observable<void> {
-    const url = API_URL + '/measurement/' + id;
-    return this.http
-      .delete<void>(url).pipe(
-        catchError(this.handleError)
-      );
-  }
+  // delete(id: Number): Observable<void> {
+  //   const url = API_URL + '/measurement/' + id;
+  //   return this.http
+  //     .delete<void>(url).pipe(
+  //       catchError(this.handleError)
+  //     );
+  // }
 
-  insert(measurement: Measurement): Observable<Measurement> {
-    const url = API_URL + '/measurement';
-    return this.http.post<Measurement>(url, measurement, httpOptions).pipe(
-      catchError(this.handleError)
-    );
-  }
+  // insert(measurement: Measurement): Observable<Measurement> {
+  //   const url = API_URL + '/measurement';
+  //   return this.http.post<Measurement>(url, measurement, httpOptions).pipe(
+  //     catchError(this.handleError)
+  //   );
+  // }
 
-  update(measurement: Measurement): Observable<Measurement> {
-    const url = API_URL + '/measurement/' + measurement.id;
-    return this.http.patch<Measurement>(url, measurement, httpOptions).pipe(
-      catchError(this.handleError)
-    );
-  }
+  // update(measurement: Measurement): Observable<Measurement> {
+  //   const url = API_URL + '/measurement/' + measurement.id;
+  //   return this.http.patch<Measurement>(url, measurement, httpOptions).pipe(
+  //     catchError(this.handleError)
+  //   );
+  // }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
