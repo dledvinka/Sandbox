@@ -5,20 +5,28 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MeasuredValueDto } from '../entities/measured-value-dto';
 import { SupplyPointMeasuredValueDto } from '../entities/supply-point-measured-value-dto';
+import { MeasurementDto } from '../entities/measurement-dto';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class MeasureValueControlService {
   constructor() { }
 
-  toFormGroup(values: MeasuredValueDto[], measuredValues: SupplyPointMeasuredValueDto[] ) {
+  toFormGroup(measurement: MeasurementDto, measuredValues: SupplyPointMeasuredValueDto[] ) {
     const group: any = {};
+    const valuesGroup: any = {};
 
-    values.forEach(value => {
+    group['dateTaken'] = new FormControl(measurement.dateTaken.toISOString().substring(0, 10), Validators.required);
+    group['values'] = new FormGroup(valuesGroup);
+
+    measurement.values.forEach(value => {
       const definition = measuredValues.find(mv => mv.id === value.supplyPointMeasuredValueId);
       const label = `{definition.name} {definition.measuredValueName} [{definition.unitName}]`;
-      group[value.supplyPointMeasuredValueId] = definition.isRequired ? new FormControl(label, Validators.required)
-                                              : new FormControl(label);
+      valuesGroup[value.label] = definition.isRequired ? new FormControl(value.value, Validators.required)
+                                              : new FormControl(value.value);
     });
+    console.log(group);
     return new FormGroup(group);
   }
 }

@@ -15,7 +15,7 @@
       <td>{{meas.values[2].value}}</td>
       <td>
         <span>
-          <a routerLink="/measurement/{{meas.id}}" routerLinkActive="active">
+          <a routerLink="/supply-point/{{supplyPointId}}/measurement/{{meas.id}}" routerLinkActive="active">
             <i class="fas fa-pen fa-lg mr-2" ></i>
           </a>
           <a routerLinkActive="active" (click)="onDelete(meas.id)">

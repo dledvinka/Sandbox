@@ -1,4 +1,4 @@
-<div class="container mt-3">
+<div *ngIf="form" class="container mt-3">
   <!-- <form *ngIf="model" (ngSubmit)="onSubmit()" #f="ngForm">
     <div class="form-group">
       <label for="dateTaken">Date taken</label>
@@ -19,13 +19,22 @@
     <button class="btn btn-primary" type="sumbit">Submit</button>
   </form> -->
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
- 
-    <div *ngFor="let question of questions" class="form-row">
-      <app-question [question]="question" [form]="form"></app-question>
+    
+    <div class="form-group">
+      <label for="dateTaken">Date taken</label>
+      <input type="date" id="dateTaken" class="form-control" formControlName='dateTaken'>
+    </div>
+
+    <!-- <div *ngFor="let mv of model.values">
+      <label [attr.for]="mv.label">{{mv.label}}</label>
+      <input type="number" class="form-control" [formControlName]="mv.label" [id]="mv.label">
+      <div class="errorMessage" *ngIf="!isValid">{{mv.label}} is required</div>
+    </div> -->
+
+    <div *ngFor="let mv of model.values">
+      <app-measured-value [measuredValue]="mv" [form]="form"></app-measured-value>
     </div>
  
-    <div class="form-row">
-      <button type="submit" [disabled]="!form.valid">Save</button>
-    </div>
+    <button class="btn btn-primary mt-3" type="submit" [disabled]="!form.valid">Save</button>
   </form>
 </div>

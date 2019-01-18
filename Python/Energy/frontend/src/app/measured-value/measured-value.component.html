@@ -1,0 +1,7 @@
+<div [formGroup]="form">
+  <div formGroupName="values">
+    <label [attr.for]="measuredValue.label">{{measuredValue.label}}</label>
+    <input type="number" class="form-control" [formControlName]="measuredValue.label" [id]="measuredValue.label">
+    <!-- <div class="errorMessage" *ngIf="!isValid">{{measuredValue.label}} is required</div> -->
+  </div>
+</div>

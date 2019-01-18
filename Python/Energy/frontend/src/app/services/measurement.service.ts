@@ -20,9 +20,9 @@ const measurements: MeasurementDto[] = [
     created: new Date(2018, 10, 1),
     dateTaken: new Date(2018, 10, 1),
     values: [
-      { id: 1, supplyPointMeasuredValueId: 1, value: 20000 },
-      { id: 2, supplyPointMeasuredValueId: 2, value: 40000 },
-      { id: 3, supplyPointMeasuredValueId: 3, value: 5000 }
+      { id: 1, supplyPointMeasuredValueId: 1, value: 20000, label: 'EHR' },
+      { id: 2, supplyPointMeasuredValueId: 2, value: 40000, label: 'ELR' },
+      { id: 3, supplyPointMeasuredValueId: 3, value: 5000, label: 'GAS' }
     ]
   },
   {
@@ -31,9 +31,9 @@ const measurements: MeasurementDto[] = [
     created: new Date(2018, 11, 1),
     dateTaken: new Date(2018, 11, 1),
     values: [
-      { id: 4, supplyPointMeasuredValueId: 1, value: 22000 },
-      { id: 5, supplyPointMeasuredValueId: 2, value: 42000 },
-      { id: 6, supplyPointMeasuredValueId: 3, value: 5500 }
+      { id: 4, supplyPointMeasuredValueId: 1, value: 22000, label: 'EHR' },
+      { id: 5, supplyPointMeasuredValueId: 2, value: 42000, label: 'ELR' },
+      { id: 6, supplyPointMeasuredValueId: 3, value: 5500, label: 'GAS' }
     ]
   },
   {
@@ -42,9 +42,9 @@ const measurements: MeasurementDto[] = [
     created: new Date(2018, 12, 1),
     dateTaken: new Date(2018, 12, 1),
     values: [
-      { id: 7, supplyPointMeasuredValueId: 1, value: 24000 },
-      { id: 8, supplyPointMeasuredValueId: 2, value: 44000 },
-      { id: 9, supplyPointMeasuredValueId: 3, value: 6000 }
+      { id: 7, supplyPointMeasuredValueId: 1, value: 24000, label: 'EHR' },
+      { id: 8, supplyPointMeasuredValueId: 2, value: 44000, label: 'ELR' },
+      { id: 9, supplyPointMeasuredValueId: 3, value: 6000, label: 'GAS' }
     ]
   },
   {
@@ -53,9 +53,9 @@ const measurements: MeasurementDto[] = [
     created: new Date(2019, 1, 1),
     dateTaken: new Date(2019, 1, 1),
     values: [
-      { id: 10, supplyPointMeasuredValueId: 1, value: 26000 },
-      { id: 11, supplyPointMeasuredValueId: 2, value: 46000 },
-      { id: 12, supplyPointMeasuredValueId: 3, value: 6500 }
+      { id: 10, supplyPointMeasuredValueId: 1, value: 26000, label: 'EHR' },
+      { id: 11, supplyPointMeasuredValueId: 2, value: 46000, label: 'ELR' },
+      { id: 12, supplyPointMeasuredValueId: 3, value: 6500, label: 'GAS' }
     ]
   }
 ];
@@ -77,7 +77,13 @@ export class MeasurementService {
   }
 
   get(id: Number): Observable<MeasurementDto> {
-    return of(measurements.find((m) => m.id === id)).pipe(delay(500));
+    if (id) {
+      console.log('return', id);
+      return of(measurements.find((m) => m.id === id)).pipe(delay(500));
+    } else {
+      console.log('return undefined');
+      return of(undefined);
+    }
     // const url = API_URL + '/measurement/' + id;
     // return this.http
     //   .get<Measurement>(url).pipe(

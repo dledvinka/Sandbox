@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SupplyPointsComponent } from './supply-points/supply-points.component';
 import { SupplyPointComponent } from './supply-point/supply-point.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MeasuredValueComponent } from './measured-value/measured-value.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     NavbarComponent,
     SupplyPointsComponent,
     SupplyPointComponent,
-    DashboardComponent
+    DashboardComponent,
+    MeasuredValueComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     FormsModule
   ],
   providers: [],
