@@ -1,23 +1,4 @@
 <div *ngIf="form" class="container mt-3">
-  <!-- <form *ngIf="model" (ngSubmit)="onSubmit()" #f="ngForm">
-    <div class="form-group">
-      <label for="dateTaken">Date taken</label>
-      <input type="date" id="dateTaken" class="form-control" [ngModel]="model.date_taken" name="dateTaken" required>
-    </div>
-    <div class="form-group">
-      <label for="eleHighRate">Electricity (high rate) [kWh]</label>
-      <input type="number" id="eleHighRate" class="form-control" [ngModel]="model.electricity_high_rate_kwh" name="eleHighRate">
-    </div>
-    <div class="form-group">
-      <label for="eleLowRate">Electricity (low rate) [kWh]</label>
-      <input type="number" id="eleLowRate" class="form-control" [ngModel]="model.electricity_low_rate_kwh" name="eleLowRate">
-    </div>
-    <div class="form-group">
-      <label for="gas">Gas [m<sup>3</sup>]</label>
-      <input type="number" id="gas" class="form-control" [ngModel]="model.gas_m3" name="gas">
-    </div>
-    <button class="btn btn-primary" type="sumbit">Submit</button>
-  </form> -->
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
     
     <div class="form-group">
@@ -25,14 +6,12 @@
       <input type="date" id="dateTaken" class="form-control" formControlName='dateTaken'>
     </div>
 
-    <!-- <div *ngFor="let mv of model.values">
-      <label [attr.for]="mv.label">{{mv.label}}</label>
-      <input type="number" class="form-control" [formControlName]="mv.label" [id]="mv.label">
-      <div class="errorMessage" *ngIf="!isValid">{{mv.label}} is required</div>
-    </div> -->
-
-    <div *ngFor="let mv of model.values">
-      <app-measured-value [measuredValue]="mv" [form]="form"></app-measured-value>
+    <div formArrayName="values">
+      <h4>Measured values</h4>
+      <div class="form-group" *ngFor="let valueControl of form.get('values').controls; let i = index">
+        <label>{{model.values[i].label}}</label>
+        <input type="text" class="form-control" [formControlName]="i">
+      </div>
     </div>
  
     <button class="btn btn-primary mt-3" type="submit" [disabled]="!form.valid">Save</button>

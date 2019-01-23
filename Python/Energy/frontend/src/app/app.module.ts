@@ -12,7 +12,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SupplyPointsComponent } from './supply-points/supply-points.component';
 import { SupplyPointComponent } from './supply-point/supply-point.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { MeasuredValueComponent } from './measured-value/measured-value.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,7 @@ import { MeasuredValueComponent } from './measured-value/measured-value.componen
     NavbarComponent,
     SupplyPointsComponent,
     SupplyPointComponent,
-    DashboardComponent,
-    MeasuredValueComponent
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

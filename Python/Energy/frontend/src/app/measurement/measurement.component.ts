@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, FormArray } from '@angular/forms';
 import { MeasurementDto } from '../entities/measurement-dto';
 import { MeasurementService } from '../services/measurement.service';
 import { CommandResult } from '../entities/command-result';
@@ -62,38 +62,17 @@ export class MeasurementComponent implements OnInit {
         }
 
         this.form = this.mvcs.toFormGroup(this.model, this.supplyPoint.measuredValues);
-        console.log(this.form);
-        console.log(this.form.controls['values']);
       });
   }
 
   onSubmit(): void {
-    console.log('onSubmit', this.form);
-    console.log('json', JSON.stringify(this.form.value));
     this.model.dateTaken = this.form.value['dateTaken'];
 
-    for (const key of this.form.value['values']) {
-      const measValue = this.model.values.find(mv => mv.label === key);
-      measValue.value = this.form.value['values'][key];
-    }
+    this.model.values.forEach((mv, index) => {
+      this.model.values[index].value = Number((<FormArray>this.form.get('values')).value[index]);
+    });
 
     console.log('MODEL ', this.model);
-
-    // this.model.date_taken = this.form.value['dateTaken'];
-    // this.model.electricity_high_rate_kwh = this.form.value['eleHighRate'];
-    // this.model.electricity_low_rate_kwh = this.form.value['eleLowRate'];
-    // this.model.gas_m3 = this.form.value['gas'];
-
-    // console.log(this.model);
-
-    // if (this.id) {
-    //   this.measurementService.update(this.model).subscribe(_ => {
-    //     this.router.navigate(['/measurements']);
-    //   });
-    // } else {
-    //   this.measurementService.insert(this.model).subscribe(_ => {
-    //     this.router.navigate(['/measurements']);
-    //   });
-    // }
+    console.log('json', JSON.stringify(this.form.value));
   }
 }
