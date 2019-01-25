@@ -13,7 +13,7 @@ export class MeasureValueControlService {
 
   toFormGroup(measurement: MeasurementDto, measuredValues: SupplyPointMeasuredValueDto[] ) {
     const form = new FormGroup({
-      'dateTaken': new FormControl(measurement.dateTaken.toISOString().substring(0, 10), Validators.required),
+      'dateTaken': new FormControl(measurement.dateTaken.toISOString().substr(0, 10), Validators.required),
       'values': new FormArray([])
     });
 

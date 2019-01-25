@@ -17,8 +17,8 @@ const measurements: MeasurementDto[] = [
   {
     id: 1,
     supplyPointId: 1,
-    created: new Date(2018, 10, 1),
-    dateTaken: new Date(2018, 10, 1),
+    created: new Date(Date.UTC(2018, 10, 1)),
+    dateTaken: new Date(Date.UTC(2018, 10, 1)),
     values: [
       { id: 1, supplyPointMeasuredValueId: 1, value: 20000, label: 'EHR' },
       { id: 2, supplyPointMeasuredValueId: 2, value: 40000, label: 'ELR' },
@@ -28,8 +28,8 @@ const measurements: MeasurementDto[] = [
   {
     id: 2,
     supplyPointId: 1,
-    created: new Date(2018, 11, 1),
-    dateTaken: new Date(2018, 11, 1),
+    created: new Date(Date.UTC(2018, 11, 1)),
+    dateTaken: new Date(Date.UTC(2018, 11, 1)),
     values: [
       { id: 4, supplyPointMeasuredValueId: 1, value: 22000, label: 'EHR' },
       { id: 5, supplyPointMeasuredValueId: 2, value: 42000, label: 'ELR' },
@@ -39,8 +39,8 @@ const measurements: MeasurementDto[] = [
   {
     id: 3,
     supplyPointId: 1,
-    created: new Date(2018, 12, 1),
-    dateTaken: new Date(2018, 12, 1),
+    created: new Date(Date.UTC(2018, 12, 1)),
+    dateTaken: new Date(Date.UTC(2018, 12, 1)),
     values: [
       { id: 7, supplyPointMeasuredValueId: 1, value: 24000, label: 'EHR' },
       { id: 8, supplyPointMeasuredValueId: 2, value: 44000, label: 'ELR' },
@@ -50,8 +50,8 @@ const measurements: MeasurementDto[] = [
   {
     id: 4,
     supplyPointId: 1,
-    created: new Date(2019, 1, 1),
-    dateTaken: new Date(2019, 1, 1),
+    created: new Date(Date.UTC(2019, 1, 1)),
+    dateTaken: new Date(Date.UTC(2019, 1, 1)),
     values: [
       { id: 10, supplyPointMeasuredValueId: 1, value: 26000, label: 'EHR' },
       { id: 11, supplyPointMeasuredValueId: 2, value: 46000, label: 'ELR' },
@@ -64,7 +64,6 @@ const measurements: MeasurementDto[] = [
   providedIn: 'root'
 })
 export class MeasurementService {
-
   constructor(private http: HttpClient) { }
 
   getAll(supplyPointId: number): Observable<MeasurementDto[]> {
@@ -89,6 +88,21 @@ export class MeasurementService {
     //   .get<Measurement>(url).pipe(
     //     catchError(this.handleError)
     //   );
+  }
+
+  insert(model: MeasurementDto): Observable<MeasurementDto> {
+    console.log('MeasurementService::insert', model);
+    return of(model).pipe(delay(500));
+  }
+
+  update(model: MeasurementDto): Observable<MeasurementDto> {
+    console.log('MeasurementService::update', model);
+    return of(model).pipe(delay(500));
+  }
+
+  delete(id: Number): Observable<void> {
+    console.log('MeasurementService::delete', id);
+    return of();
   }
 
   // delete(id: Number): Observable<void> {

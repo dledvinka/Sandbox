@@ -66,13 +66,23 @@ export class MeasurementComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.model.dateTaken = this.form.value['dateTaken'];
+    this.model.dateTaken = new Date(this.form.value['dateTaken']);
 
     this.model.values.forEach((mv, index) => {
       this.model.values[index].value = Number((<FormArray>this.form.get('values')).value[index]);
     });
 
-    console.log('MODEL ', this.model);
-    console.log('json', JSON.stringify(this.form.value));
+    console.log('form values (json)', JSON.stringify(this.form.value));
+    console.log('model values (json) ',  JSON.stringify(this.model));
+
+    if (this.measurementId) {
+      this.measurementService.update(this.model).subscribe(_ => {
+        this.router.navigate([`/supply-point/{this.supplyPointId}/measurements`]);
+      });
+    } else {
+      this.measurementService.insert(this.model).subscribe(_ => {
+        this.router.navigate([`/supply-point/{this.supplyPointId}/measurements`]);
+      });
+    }
   }
 }
