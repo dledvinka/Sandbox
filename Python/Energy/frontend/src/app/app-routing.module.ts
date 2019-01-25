@@ -37,10 +37,10 @@ const routes: Routes = [
     path: 'supply-points',
     component: SupplyPointsComponent
   },
-  {
-    path: 'measurements/:id',
-    component: MeasurementComponent
-  },
+  // {
+  //   path: 'measurements/:id',
+  //   component: MeasurementComponent
+  // },
   {
     path: '',
     redirectTo: '/supply-points',

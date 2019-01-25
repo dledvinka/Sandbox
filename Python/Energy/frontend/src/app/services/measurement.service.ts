@@ -76,6 +76,7 @@ export class MeasurementService {
   }
 
   get(id: Number): Observable<MeasurementDto> {
+    console.log('MeasurementService::get', id);
     if (id) {
       console.log('return', id);
       return of(measurements.find((m) => m.id === id)).pipe(delay(500));

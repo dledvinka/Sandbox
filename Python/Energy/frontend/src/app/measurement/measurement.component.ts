@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgForm, FormGroup, FormControl, FormArray } from '@angular/forms';
+import { NgForm, FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { MeasurementDto } from '../entities/measurement-dto';
 import { MeasurementService } from '../services/measurement.service';
 import { CommandResult } from '../entities/command-result';
@@ -29,13 +29,15 @@ export class MeasurementComponent implements OnInit {
     private supplyPointService: SupplyPointService,
     private mvcs: MeasureValueControlService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
 
     const idParam = this.route.snapshot.paramMap.get('id');
     const midParam = this.route.snapshot.paramMap.get('mid');
+    console.log('paramMap', this.route.snapshot.paramMap);
     this.supplyPointId = Number(idParam);
     this.measurementId = midParam ? Number(midParam) : undefined;
 
@@ -47,10 +49,10 @@ export class MeasurementComponent implements OnInit {
       (supplyPoint: SupplyPointDetailDto, measurement: MeasurementDto) => ({ supplyPoint, measurement }))
       .subscribe(data => {
         console.log('zip result', data);
-        this.supplyPoint = data.supplyPoint;
+        this.supplyPoint = {...data.supplyPoint};
 
         if (data.measurement) {
-          this.model = data.measurement;
+          this.model = {...data.measurement};
         } else {
           this.model = new MeasurementDto();
           this.model.supplyPointId = this.supplyPointId;
@@ -61,7 +63,14 @@ export class MeasurementComponent implements OnInit {
           });
         }
 
+        this.form = this.formBuilder.group({
+          dateTaken: []
+        });
+
         this.form = this.mvcs.toFormGroup(this.model, this.supplyPoint.measuredValues);
+        const dateTaken = this.model.dateTaken || new Date();
+        this.form.get('dateTaken').patchValue(dateTaken.toISOString().substr(0, 10));
+        this.form.get('values').patchValue(this.model.values.map(val => val.value));
       });
   }
 
@@ -77,11 +86,11 @@ export class MeasurementComponent implements OnInit {
 
     if (this.measurementId) {
       this.measurementService.update(this.model).subscribe(_ => {
-        this.router.navigate([`/supply-point/{this.supplyPointId}/measurements`]);
+        this.router.navigate(['/supply-point/' + this.supplyPointId + '/measurements']);
       });
     } else {
       this.measurementService.insert(this.model).subscribe(_ => {
-        this.router.navigate([`/supply-point/{this.supplyPointId}/measurements`]);
+        this.router.navigate(['/supply-point/' + this.supplyPointId + '/measurements']);
       });
     }
   }
