@@ -38,6 +38,10 @@ const routes: Routes = [
     component: SupplyPointsComponent
   },
   {
+    path: 'measurements/:id',
+    component: MeasurementComponent
+  },
+  {
     path: '',
     redirectTo: '/supply-points',
     pathMatch: 'full'
