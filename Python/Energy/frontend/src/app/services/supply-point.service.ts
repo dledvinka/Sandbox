@@ -20,30 +20,21 @@ const supplyPointDetail: SupplyPointDetailDto = {
       id: 1,
       supplyPointId: 1,
       name: 'Electricity high rate',
-      measuredValueTypeId: 1,
-      measuredValueName: 'Electricity consumption',
-      unitId: 1,
-      unitName: 'kWh',
+      unit: 'kWh',
       isRequired: false
     },
     {
       id: 2,
       supplyPointId: 1,
       name: 'Electricity low rate',
-      measuredValueTypeId: 1,
-      measuredValueName: 'Electricity consumption',
-      unitId: 1,
-      unitName: 'kWh',
+      unit: 'kWh',
       isRequired: false
     },
     {
       id: 3,
       supplyPointId: 1,
       name: 'Gas',
-      measuredValueTypeId: 2,
-      measuredValueName: 'Gas consumption',
-      unitId: 2,
-      unitName: 'm3',
+      unit: 'm3',
       isRequired: false
     }
   ]
@@ -56,27 +47,27 @@ export class SupplyPointService {
   constructor() { }
 
   getAll(): Observable<SupplyPointListItemDto[]> {
-    console.log('SupplyPointService.getAll', supplyPoints);
+    console.log('SupplyPointService::getAll', supplyPoints);
     return of(supplyPoints);
   }
 
   get(id: number): Observable<SupplyPointDetailDto> {
-    console.log('SupplyPointService.get, id = ', id, supplyPointDetail);
+    console.log('SupplyPointService::get, id = ', id, supplyPointDetail);
     return of(supplyPointDetail);
   }
 
   insert(model: SupplyPointDetailDto): Observable<SupplyPointDetailDto> {
-    console.log('SupplyPointService.insert', model);
+    console.log('SupplyPointService::insert', model);
     return of(model).pipe(delay(500));
   }
 
   update(model: SupplyPointDetailDto): Observable<SupplyPointDetailDto> {
-    console.log('SupplyPointService.update', model);
+    console.log('SupplyPointService::update', model);
     return of(model).pipe(delay(500));
   }
 
   delete(id: number): Observable<void> {
-    console.log('SupplyPointService.delete', id);
+    console.log('SupplyPointService::delete', id);
     return of();
   }
 }
