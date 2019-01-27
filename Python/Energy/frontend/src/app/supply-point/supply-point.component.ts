@@ -4,6 +4,8 @@ import { SupplyPointService } from '../services/supply-point.service';
 import { SupplyPointDetailDto } from '../entities/supply-point-detail-dto';
 import { NgForm, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SupplyPointMeasuredValueDto } from '../entities/supply-point-measured-value-dto';
+import { of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-supply-point',
@@ -26,20 +28,30 @@ export class SupplyPointComponent implements OnInit {
 
     const idParam = this.route.snapshot.paramMap.get('id');
     const idParamValue: number = idParam ? Number(idParam) : undefined;
-
-    if (idParamValue && idParamValue !== 0) {
-      this.id = idParamValue;
-      this.supplyPointService.get(this.id)
-        .subscribe(data => {
-          this.model = data;
-        });
-    } else {
-      this.model = new SupplyPointDetailDto();
-      this.model.measuredValues = [];
-    }
-
     this.editForm = this.createForm(this.model);
-    this.editForm.patchValue(this.model);
+
+    const model$ = of(idParamValue).pipe(switchMap(idParamValue => {
+      if (idParamValue && idParamValue !== 0) {
+        this.id = idParamValue;
+        return this.supplyPointService.get(this.id);
+      } else {
+        const model = new SupplyPointDetailDto();
+        model.measuredValues = [];
+        return of(model);
+      }
+    }))
+
+    const form$ = model$.pipe(
+      tap(model => {
+        //this.editForm = this.createForm(this.model);
+        console.log('MODEL ', model);
+        model.measuredValues.forEach(mv => {
+          (<FormArray>this.editForm.get('measuredValues')).push(this.createMeasurementControl(mv))
+        });
+
+        this.editForm.patchValue(model);
+      })
+    ).subscribe();
   }
 
   onAddMeasuredValue() : void {
@@ -74,10 +86,6 @@ export class SupplyPointComponent implements OnInit {
       address: [],
       comment: [],
       measuredValues: this.formBuilder.array([])
-    });
-
-    model.measuredValues.forEach(mv => {
-      (<FormArray>form.get('measuredValues')).push(this.createMeasurementControl(mv))
     });
 
     return form;

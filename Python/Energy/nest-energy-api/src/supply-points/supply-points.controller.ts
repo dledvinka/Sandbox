@@ -1,26 +1,32 @@
 import {
-    Get,
-    Post,
-    Body,
-    Controller,
-    UsePipes,
-  } from '@nestjs/common';
-import { SupplyPointListItemDto } from './supply-point-list-item.dto';
+  Get,
+  Post,
+  Body,
+  Controller,
+  UsePipes,
+  Param,
+} from '@nestjs/common';
+import { SupplyPointListItemDto, SupplyPointDetailDto } from '../entities/entities.dto';
 import { SupplyPointsService } from './supply-points.service';
-  
-  @Controller('supply-points')
-  export class SupplyPointsController {
-  
-    constructor(private readonly supplyPointsService: SupplyPointsService) {}
-  
-    @Get()
-    async findAll(): Promise<SupplyPointListItemDto[]> {
-      return this.supplyPointsService.findAll();
-    }
-  
-    // @Post()
-    // @UsePipes(new ValidationPipe())
-    // async create(@Body() createItemDto: CreateItemDto) {
-    //   this.itemsService.create(createItemDto);
-    // }
+
+@Controller('supply-points')
+export class SupplyPointsController {
+
+  constructor(private readonly supplyPointsService: SupplyPointsService) { }
+
+  @Get()
+  async findAll(): Promise<SupplyPointListItemDto[]> {
+    return this.supplyPointsService.findAll();
   }
+
+  @Get(':id')
+  async findOne(@Param('id') id): Promise<SupplyPointDetailDto> {
+    return this.supplyPointsService.find(id);
+  }
+
+  // @Post()
+  // @UsePipes(new ValidationPipe())
+  // async create(@Body() createItemDto: CreateItemDto) {
+  //   this.itemsService.create(createItemDto);
+  // }
+}
