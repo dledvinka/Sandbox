@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SupplyPointListItemDto, SupplyPointDetailDto } from '../entities/entities.dto';
+import { SupplyPointListItemDto, SupplyPointDetailDto, MeasurementDto } from '../entities/entities.dto';
 
 const supplyPoints: SupplyPointListItemDto[] = [
   { id: 1, name: 'My place 1' },

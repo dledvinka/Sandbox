@@ -18,3 +18,18 @@ export interface SupplyPointDetailDto {
   comment: string;
   measuredValues: SupplyPointMeasuredValueDto[];
 }
+
+export interface MeasurementDto {
+  id: number;
+  supplyPointId: number;
+  created: Date;
+  dateTaken: Date;
+  values: MeasuredValueDto[];
+}
+
+export interface MeasuredValueDto {
+  id: number;
+  supplyPointMeasuredValueId: number;
+  label: string;
+  value: number;
+}

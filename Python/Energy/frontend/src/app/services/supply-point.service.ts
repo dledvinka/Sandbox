@@ -12,11 +12,11 @@ export class SupplyPointService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<SupplyPointListItemDto[]> {
-    return this.http.get<SupplyPointListItemDto[]>("http://localhost:3000/supply-points");
+    return this.http.get<SupplyPointListItemDto[]>('/api/supply-points');
   }
 
   get(id: Number): Observable<SupplyPointDetailDto> {
-    return this.http.get<SupplyPointDetailDto>("http://localhost:3000/supply-points/" + id);
+    return this.http.get<SupplyPointDetailDto>('/api/supply-points/' + id);
   }
 
   insert(model: SupplyPointDetailDto): Observable<SupplyPointDetailDto> {

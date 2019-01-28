@@ -42,7 +42,7 @@ export class MeasurementComponent implements OnInit {
     this.measurementId = midParam ? Number(midParam) : undefined;
 
     const getSupplyPoint$ = this.supplyPointService.get(this.supplyPointId);
-    const getMeasurement$ = this.measurementService.get(this.measurementId);
+    const getMeasurement$ = this.measurementService.get(this.supplyPointId, this.measurementId);
     console.log('here', this.supplyPointId, this.measurementId);
 
     combineLatest([getSupplyPoint$, getMeasurement$],
@@ -69,6 +69,7 @@ export class MeasurementComponent implements OnInit {
 
         this.form = this.mvcs.toFormGroup(this.model, this.supplyPoint.measuredValues);
         const dateTaken = this.model.dateTaken || new Date();
+        console.log(dateTaken);
         this.form.get('dateTaken').patchValue(dateTaken.toISOString().substr(0, 10));
         this.form.get('values').patchValue(this.model.values.map(val => val.value));
       });

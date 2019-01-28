@@ -13,7 +13,7 @@ const routes: Routes = [
     component: TestComponent
   },
   {
-    path: 'supply-point/:id',
+    path: 'supply-points/:id',
     children: [
       {
         path: 'detail',
@@ -24,7 +24,7 @@ const routes: Routes = [
         component: MeasurementsComponent
       },
       {
-        path: 'measurement/:mid',
+        path: 'measurements/:mid',
         component: MeasurementComponent
       },
       {
