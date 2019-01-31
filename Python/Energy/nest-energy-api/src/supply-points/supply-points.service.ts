@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Repository, DeleteResult, Connection } from 'typeorm';
-import { SupplyPoint } from './supply-point.entity';
+import { SupplyPoint } from '../entities/supply-point.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()

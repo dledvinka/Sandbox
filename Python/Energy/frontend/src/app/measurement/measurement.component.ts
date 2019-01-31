@@ -68,9 +68,10 @@ export class MeasurementComponent implements OnInit {
         });
 
         this.form = this.mvcs.toFormGroup(this.model, this.supplyPoint.measuredValues);
-        const dateTaken = this.model.dateTaken || new Date();
+        const dateTaken = this.model.dateTaken || new Date().toISOString();
         console.log(dateTaken);
-        this.form.get('dateTaken').patchValue(dateTaken.toISOString().substr(0, 10));
+        //this.form.get('dateTaken').patchValue(dateTaken.toISOString().substr(0, 10));
+        this.form.get('dateTaken').patchValue(dateTaken.substr(0, 10));
         this.form.get('values').patchValue(this.model.values.map(val => val.value));
       });
   }
@@ -87,11 +88,11 @@ export class MeasurementComponent implements OnInit {
 
     if (this.measurementId) {
       this.measurementService.update(this.model).subscribe(_ => {
-        this.router.navigate(['/supply-point/' + this.supplyPointId + '/measurements']);
+        this.router.navigate(['/supply-points/' + this.supplyPointId + '/measurements']);
       });
     } else {
       this.measurementService.insert(this.model).subscribe(_ => {
-        this.router.navigate(['/supply-point/' + this.supplyPointId + '/measurements']);
+        this.router.navigate(['/supply-points/' + this.supplyPointId + '/measurements']);
       });
     }
   }

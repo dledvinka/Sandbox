@@ -29,22 +29,22 @@ export class MeasurementService {
   }
 
   get(supplyPointId: number, measurementId: Number): Observable<MeasurementDto> {
-    return this.http.get<MeasurementDto>('/api/supply-points/' + supplyPointId + '/measurements/' + measurementId);
+    return this.http.get<MeasurementDto>(`/api/supply-points/${supplyPointId}/measurements/${measurementId}`);
   }
 
   insert(model: MeasurementDto): Observable<MeasurementDto> {
     console.log('MeasurementService::insert', model);
-    return of(model).pipe(delay(500));
+    return this.http.post<MeasurementDto>(`/api/supply-points/${model.supplyPointId}/measurements`, model);
   }
 
   update(model: MeasurementDto): Observable<MeasurementDto> {
     console.log('MeasurementService::update', model);
-    return of(model).pipe(delay(500));
+    return this.http.put<MeasurementDto>(`/api/supply-points/${model.supplyPointId}/measurements/${model.id}`, model);
   }
 
-  delete(id: Number): Observable<void> {
-    console.log('MeasurementService::delete', id);
-    return of();
+  delete(model: MeasurementDto): Observable<MeasurementDto> {
+    console.log('MeasurementService::delete', model);
+    return this.http.delete<MeasurementDto>(`/api/supply-points/${model.supplyPointId}/measurements/${model.id}`);
   }
 
   // delete(id: Number): Observable<void> {

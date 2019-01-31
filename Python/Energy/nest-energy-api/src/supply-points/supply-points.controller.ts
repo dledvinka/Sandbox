@@ -13,7 +13,8 @@ import {
 import { SupplyPointListItemDto, SupplyPointDetailDto, MeasurementDto } from '../entities/entities.dto';
 import { SupplyPointsService } from './supply-points.service';
 import { MeasurementsService } from 'src/measurements/measurements.service';
-import { SupplyPoint } from './supply-point.entity';
+import { SupplyPoint } from '../entities/supply-point.entity';
+import { Measurement } from 'src/entities/measurement.entity';
 
 @Controller('supply-points')
 export class SupplyPointsController {
@@ -33,13 +34,13 @@ export class SupplyPointsController {
   }
 
   @Get(':supplyPointId/measurements')
-  async getAllMeasurements(@Param('supplyPointId') supplyPointId): Promise<MeasurementDto[]> {
+  async getAllMeasurements(@Param('supplyPointId') supplyPointId): Promise<Measurement[]> {
     return this.measurementsService.findAll(Number(supplyPointId));
   }
 
   @Get(':supplyPointId/measurements/:measurementId')
-  async getMeasurement(@Param('supplyPointId') supplyPointId, @Param('measurementId') measurementId): Promise<MeasurementDto> {
-    return this.measurementsService.find(Number(supplyPointId), Number(measurementId));
+  async getMeasurement(@Param('supplyPointId') supplyPointId, @Param('measurementId') measurementId): Promise<Measurement> {
+    return this.measurementsService.find(Number(measurementId));
   }
 
   @Post()
@@ -57,6 +58,23 @@ export class SupplyPointsController {
   @Delete(':id')
   remove(@Param('id') id) {
     return this.supplyPointsService.delete(id);
+  }
+
+  @Post(':supplyPointId/measurements')
+  @UsePipes(new ValidationPipe())
+  async createMeasurement(@Param('supplyPointId') supplyPointId, @Body() measurement: Measurement): Promise<Measurement> {
+    return this.measurementsService.create(supplyPointId, measurement);
+  }
+
+  @Put(':id/measurements/:mid')
+  @UsePipes(new ValidationPipe())
+  async updateMeasurement(@Param('id') supplyPointId, @Param('mid') measurementId, @Body() measurement: Measurement): Promise<Measurement> {
+    return this.measurementsService.update(measurement);
+  }
+
+  @Delete(':id/measurements/:mid')
+  removeMeasurement(@Param('id') supplyPointId, @Param('mid') measurementId) {
+    return this.measurementsService.delete(measurementId);
   }
 
   // @Post()

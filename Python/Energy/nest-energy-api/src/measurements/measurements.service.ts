@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { MeasurementDto } from 'src/entities/entities.dto';
+import { Measurement } from 'src/entities/measurement.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, DeleteResult } from 'typeorm';
 
 const measurements: MeasurementDto[] = [
   {
@@ -51,18 +54,34 @@ const measurements: MeasurementDto[] = [
 @Injectable()
 export class MeasurementsService {
 
-  findAll(supplyPointId: number): MeasurementDto[] {
-    const data = measurements.filter(m => m.supplyPointId === supplyPointId);
-    return data;
+  constructor(
+    @InjectRepository(Measurement) private readonly measurementRepository: Repository<Measurement>) {
   }
 
-  find(supplyPointId: number, measurementId: number): MeasurementDto {
-    const data = measurements.find(m => m.supplyPointId === supplyPointId && m.id === measurementId);
-    console.log('DATA', supplyPointId, measurementId, data);
-    return data;
+  async findAll(supplyPointId: number): Promise<Measurement[]> {
+    return await this.measurementRepository.find({ supplyPointId });
+
+    // return await this.measurementRepository
+    //   .createQueryBuilder()
+    //   .select('m')
+    //   .from(Measurement, 'm')
+    //   .where('m.supplyPointId = :id', { id: supplyPointId })
+    //   .getMany();
   }
 
-  //   create(item: Item) {
-  //     this.items.push(item);
-  //   }
+  async find(measurementId: number): Promise<Measurement> {
+    return await this.measurementRepository.findOne(measurementId);
+  }
+
+  async create(supplyPointId: number, measurement: Measurement): Promise<Measurement> {
+    return this.measurementRepository.save(measurement);
+  }
+
+  async update(measurement: Measurement): Promise<Measurement> {
+    return await this.measurementRepository.save(measurement);
+  }
+
+  async delete(id: number): Promise<DeleteResult> {
+    return await this.measurementRepository.delete(id);
+  }
 }

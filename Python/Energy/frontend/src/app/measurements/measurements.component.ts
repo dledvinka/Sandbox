@@ -28,14 +28,18 @@ export class MeasurementsComponent implements OnInit {
     this.measurements$ = this.measurementsService.getAll(this.supplyPointId);
   }
 
-  onDelete(id: Number): void {
-    this.measurementsService.get(this.supplyPointId, id).subscribe((data: MeasurementDto) => {
-      const msg = 'Are you sure to delete measurement related to ' + data.dateTaken.toLocaleDateString() + '?';
-      if (confirm(msg)) {
-        this.measurementsService.delete(id).subscribe(_ => {
-          this.router.navigate([`/supply-point/{this.supplyPointId}/measurements`]);
-        });
-      }
+  onDelete(model: MeasurementDto): void {
+    // this.measurementsService.get(this.supplyPointId, id).subscribe((data: MeasurementDto) => {
+    //   const msg = 'Are you sure to delete measurement related to ' + data.dateTaken.toLocaleDateString() + '?';
+    //   if (confirm(msg)) {
+    //     this.measurementsService.delete(id).subscribe(_ => {
+    //       this.router.navigate([`/supply-point/{this.supplyPointId}/measurements`]);
+    //     });
+    //   }
+    // });
+
+    this.measurementsService.delete(model).subscribe(_ => {
+      this.router.navigate([`/supply-points/${this.supplyPointId}/measurements`]);
     });
   }
 }

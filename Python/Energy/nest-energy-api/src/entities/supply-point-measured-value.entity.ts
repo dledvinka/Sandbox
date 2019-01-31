@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { SupplyPoint } from './supply-point.entity';
+import { MeasuredValue } from 'src/entities/measured-value.entity';
 
 @Entity()
 export class SupplyPointMeasuredValue {
@@ -19,4 +20,10 @@ export class SupplyPointMeasuredValue {
     type => SupplyPoint,
     supplyPoint => supplyPoint.measuredValues)
   supplyPoint: SupplyPoint;
+
+  @OneToMany(
+    type => MeasuredValue,
+    measuredValue => measuredValue.supplyPointMeasuredValue,
+    { cascade: true, onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  measuredValues: MeasuredValue[];
 }
