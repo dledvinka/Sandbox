@@ -1,0 +1,7 @@
+{
+  "type": "sqlite",
+  "database": "energy.sqlite",
+  "entities": ["src/**/**.entity{.ts,.js}"],
+  "logging": true,
+  "synchronize": true
+}

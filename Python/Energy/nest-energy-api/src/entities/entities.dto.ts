@@ -8,7 +8,7 @@ export interface SupplyPointMeasuredValueDto {
   supplyPointId: number;
   name: string;
   unit: string;
-  isRequired: Boolean;
+  isRequired: boolean;
 }
 
 export interface SupplyPointDetailDto {

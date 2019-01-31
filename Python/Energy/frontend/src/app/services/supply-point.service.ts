@@ -20,17 +20,14 @@ export class SupplyPointService {
   }
 
   insert(model: SupplyPointDetailDto): Observable<SupplyPointDetailDto> {
-    console.log('SupplyPointService::insert', model);
-    return of(model).pipe(delay(500));
+    return this.http.post<SupplyPointDetailDto>('/api/supply-points', model);
   }
 
   update(model: SupplyPointDetailDto): Observable<SupplyPointDetailDto> {
-    console.log('SupplyPointService::update', model);
-    return of(model).pipe(delay(500));
+    return this.http.put<SupplyPointDetailDto>(`/api/supply-points/${model.id}`, model);
   }
 
-  delete(id: number): Observable<void> {
-    console.log('SupplyPointService::delete', id);
-    return of();
+  delete(id: number): Observable<SupplyPointDetailDto> {
+    return this.http.delete<SupplyPointDetailDto>(`/api/supply-points/${id}`);
   }
 }
