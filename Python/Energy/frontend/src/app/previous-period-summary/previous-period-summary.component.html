@@ -1,0 +1,18 @@
+<p>
+  <span>Actual consumtion: </span>
+  <span>{{period.periodConsumption}} {{measuredValue.unit}}</span>
+</p>
+
+<p>
+  <span>Same period last year: </span>
+  <span>{{period.shortTimeSamePeriodConsumption}} {{measuredValue.unit}}</span>
+  <span>({{period.shortTimeSamePeriodComparison.differenceRelative}})</span>
+  <span>({{period.shortTimeSamePeriodComparison.differenceAbsolute}} {{measuredValue.unit}})</span>
+</p>
+
+<p>
+  <span>Last 3 year comparison: </span>
+  <span>{{period.longTimeSamePeriodConsumption}} {{measuredValue.unit}}</span>
+  <span>({{period.longTimeSamePeriodComparison.differenceRelative}})</span>
+  <span>({{period.longTimeSamePeriodComparison.differenceAbsolute}} {{measuredValue.unit}})</span>
+</p>

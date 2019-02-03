@@ -1,3 +1,27 @@
-<div class="container mt-3">
-    <h1>Dashboard</h1>
+<div class="container mt-3" *ngIf="summary$ | async as summary">
+    <h3>Dashboard</h3>
+    <div class="row">
+        <div class="col-md-2">
+            <h4>What</h4>
+        </div>
+        <div class="col-md-5">
+            <h4>Previos period ({{previousFrom | date}} - {{previousTo | date}})</h4>
+        </div>
+        <div class="col-md-5">
+            <h4>Current period ({{currentFrom | date}} - {{currentTo | date}})</h4>
+        </div>
+    </div>
+    <div class="row" *ngFor="let summaryFor of summary.summaryFor">
+        <div class="col-md-2">
+            <div>{{summaryFor.measuredValue.name}} ({{summaryFor.measuredValue.unit}})</div>
+        </div>
+        <div class="col-md-5">
+            <app-previous-period-summary [measuredValue]="summaryFor.measuredValue" [period]="summaryFor.previousPeriods[summaryFor.previousPeriods.length - 1]">
+            </app-previous-period-summary>
+        </div>
+        <div class="col-md-5">
+            <app-current-period-summary [measuredValue]="summaryFor.measuredValue" [period]="summaryFor.currentPeriod">
+            </app-current-period-summary>
+        </div>
+    </div>
 </div>

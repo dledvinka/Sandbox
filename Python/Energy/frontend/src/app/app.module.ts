@@ -12,6 +12,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SupplyPointsComponent } from './supply-points/supply-points.component';
 import { SupplyPointComponent } from './supply-point/supply-point.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PreviousPeriodSummaryComponent } from './previous-period-summary/previous-period-summary.component';
+import { CurrentPeriodSummaryComponent } from './current-period-summary/current-period-summary.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     NavbarComponent,
     SupplyPointsComponent,
     SupplyPointComponent,
-    DashboardComponent
+    DashboardComponent,
+    PreviousPeriodSummaryComponent,
+    CurrentPeriodSummaryComponent
   ],
   imports: [
     BrowserModule,
