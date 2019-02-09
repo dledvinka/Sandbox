@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne, JoinColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { SupplyPointMeasuredValue } from './supply-point-measured-value.entity';
 import { Measurement } from './measurement.entity';
+import { UserEntity } from 'src/users/user-entity';
 
-@Entity()
-export class SupplyPoint {
+@Entity('supply_point')
+export class SupplyPointEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -15,6 +16,23 @@ export class SupplyPoint {
 
   @Column({ length: 100 })
   comment: string;
+
+  @CreateDateColumn()
+  created: Date;
+
+  @UpdateDateColumn()
+  updated: Date;
+
+  @Column()
+  userId: number;
+
+  @ManyToOne(
+    type => UserEntity,
+    user => user.supplyPoints)
+  @JoinColumn({
+    name: 'createdById',
+  })
+  user: UserEntity;
 
   @OneToMany(
     type => Measurement,

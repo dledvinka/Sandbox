@@ -1,5 +1,5 @@
 import { ManyToOne, CreateDateColumn, PrimaryGeneratedColumn, Column, OneToMany, Entity, JoinColumn } from 'typeorm';
-import { SupplyPoint } from 'src/entities/supply-point.entity';
+import { SupplyPointEntity } from 'src/entities/supply-point.entity';
 import { MeasuredValue } from './measured-value.entity';
 
 @Entity()
@@ -14,12 +14,12 @@ export class Measurement {
   supplyPointId: number;
 
   @ManyToOne(
-    type => SupplyPoint,
+    type => SupplyPointEntity,
     supplyPoint => supplyPoint.measurements)
   @JoinColumn({
     name: 'supplyPointId',
   })
-  supplyPoint: SupplyPoint;
+  supplyPoint: SupplyPointEntity;
 
   @OneToMany(
     type => MeasuredValue,

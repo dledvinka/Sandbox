@@ -9,12 +9,17 @@ import {
   Logger,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { SupplyPointListItemDto, SupplyPointDetailDto, MeasurementDto } from '../entities/entities.dto';
 import { SupplyPointsService } from './supply-points.service';
 import { MeasurementsService } from 'src/measurements/measurements.service';
-import { SupplyPoint } from '../entities/supply-point.entity';
+import { SupplyPointEntity } from '../entities/supply-point.entity';
 import { Measurement } from 'src/entities/measurement.entity';
+import { AuthGuard } from 'src/shared/auth.guard';
+import { User } from 'src/users/user.decorator';
+import { UsersService } from 'src/users/users.service';
+import { SupplyPointRO } from 'src/entities/supply-point.ro';
 
 @Controller('api/supply-points')
 export class SupplyPointsController {
@@ -24,13 +29,14 @@ export class SupplyPointsController {
     private readonly measurementsService: MeasurementsService) { }
 
   @Get()
-  async getAllSupplyPoints(): Promise<SupplyPoint[]> {
-    return this.supplyPointsService.findAll();
+  @UseGuards(new AuthGuard())
+  async getAllSupplyPoints(@User('id') userId: number): Promise<SupplyPointRO[]> {
+    return this.supplyPointsService.findAll(userId);
   }
 
   @Get(':id')
-  async getSupplyPoint(@Param('id') id): Promise<SupplyPoint> {
-    return this.supplyPointsService.find(Number(id));
+  async getSupplyPoint(@User('id') userId: number, @Param('id') id): Promise<SupplyPointRO> {
+    return this.supplyPointsService.find(userId, Number(id));
   }
 
   @Get(':supplyPointId/measurements')
@@ -45,19 +51,19 @@ export class SupplyPointsController {
 
   @Post()
   @UsePipes(new ValidationPipe())
-  async create(@Body() supplyPoint: SupplyPoint): Promise<SupplyPoint> {
-    return this.supplyPointsService.create(supplyPoint);
+  async create(@User('id') userId: number, @Body() supplyPoint: SupplyPointEntity): Promise<SupplyPointRO> {
+    return this.supplyPointsService.create(userId, supplyPoint);
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe())
-  async update(@Param('id') id, @Body() supplyPoint: SupplyPoint): Promise<SupplyPoint> {
-    return this.supplyPointsService.update(supplyPoint);
+  async update(@User('id') userId: number, @Param('id') id, @Body() supplyPoint: SupplyPointEntity): Promise<SupplyPointRO> {
+    return this.supplyPointsService.update(userId, supplyPoint);
   }
 
   @Delete(':id')
-  remove(@Param('id') id) {
-    return this.supplyPointsService.delete(id);
+  remove(@User('id') userId: number, @Param('id') id) {
+    return this.supplyPointsService.delete(userId, id);
   }
 
   @Post(':supplyPointId/measurements')

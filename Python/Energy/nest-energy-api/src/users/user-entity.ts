@@ -1,9 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, Unique, BeforeInsert, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, Unique, BeforeInsert, CreateDateColumn, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { UserRO } from './user-ro';
+import { SupplyPointEntity } from 'src/entities/supply-point.entity';
 
-@Entity('users')
+@Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,6 +19,11 @@ export class UserEntity {
 
   @Column('text')
   password: string;
+
+  @OneToMany(
+    type => SupplyPointEntity,
+    sp => sp.user)
+  supplyPoints: SupplyPointEntity[];
 
   @BeforeInsert()
   async onBeforeInsert() {
