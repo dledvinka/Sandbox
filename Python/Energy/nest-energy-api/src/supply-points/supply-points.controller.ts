@@ -16,7 +16,7 @@ import { MeasurementsService } from 'src/measurements/measurements.service';
 import { SupplyPoint } from '../entities/supply-point.entity';
 import { Measurement } from 'src/entities/measurement.entity';
 
-@Controller('supply-points')
+@Controller('api/supply-points')
 export class SupplyPointsController {
 
   constructor(

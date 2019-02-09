@@ -11,17 +11,20 @@ import { SupplyPoint } from './entities/supply-point.entity';
 import { SupplyPointMeasuredValue } from './entities/supply-point-measured-value.entity';
 import { MeasuredValue } from './entities/measured-value.entity';
 import { Measurement } from './entities/measurement.entity';
+import { UsersModule } from './users/users.module';
+import { UserEntity } from './users/user-entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'energy.sqlite',
-      entities: [SupplyPoint, SupplyPointMeasuredValue, Measurement, MeasuredValue],
+      entities: [SupplyPoint, SupplyPointMeasuredValue, Measurement, MeasuredValue, UserEntity],
       logging: true,
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([SupplyPoint, SupplyPointMeasuredValue, Measurement, MeasuredValue]),
+    TypeOrmModule.forFeature([SupplyPoint, SupplyPointMeasuredValue, Measurement, MeasuredValue, UserEntity]),
+    UsersModule,
   ],
   controllers: [AppController, ItemsController, SupplyPointsController],
   providers: [AppService, ItemsService, SupplyPointsService, MeasurementsService, Measurement, MeasuredValue],
