@@ -6,6 +6,8 @@ import { MeasurementComponent } from './measurement/measurement.component';
 import { SupplyPointsComponent } from './supply-points/supply-points.component';
 import { SupplyPointComponent } from './supply-point/supply-point.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './login/auth-guard';
 
 const routes: Routes = [
   {
@@ -14,6 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'supply-points/:id',
+    canActivate: [AuthGuard],
     children: [
       {
         path: 'detail',
@@ -35,7 +38,8 @@ const routes: Routes = [
   },
   {
     path: 'supply-points',
-    component: SupplyPointsComponent
+    component: SupplyPointsComponent,
+    canActivate: [AuthGuard],
   },
   // {
   //   path: 'measurements/:id',
@@ -45,6 +49,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/supply-points',
     pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
 ];
 

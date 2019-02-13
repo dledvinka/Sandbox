@@ -14,7 +14,8 @@ export class SupplyPointsService {
   }
 
   async findAll(userId: number): Promise<SupplyPointRO[]> {
-    const sps = await this.supplyPointRepository.find({ where: { userId } });
+    const sps = await this.supplyPointRepository.find({ where: { userId }, relations: ['user'] });
+    console.log(JSON.stringify(sps));
     return sps.map(sp => this.toResponseObject(sp));
   }
 
@@ -25,7 +26,7 @@ export class SupplyPointsService {
 
   async create(userId: number, supplyPoint: SupplyPointEntity): Promise<SupplyPointRO> {
     const user = await this.userRepository.findOne(userId);
-    const sp = await this.supplyPointRepository.save({ ...supplyPoint, user });
+    const sp = await this.supplyPointRepository.save({ ...supplyPoint, userId });
     return this.toResponseObject(sp);
   }
 

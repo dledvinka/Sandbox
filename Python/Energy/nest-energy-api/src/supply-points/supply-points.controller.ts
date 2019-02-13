@@ -35,6 +35,7 @@ export class SupplyPointsController {
   }
 
   @Get(':id')
+  @UseGuards(new AuthGuard())
   async getSupplyPoint(@User('id') userId: number, @Param('id') id): Promise<SupplyPointRO> {
     return this.supplyPointsService.find(userId, Number(id));
   }
@@ -50,18 +51,21 @@ export class SupplyPointsController {
   }
 
   @Post()
+  @UseGuards(new AuthGuard())
   @UsePipes(new ValidationPipe())
   async create(@User('id') userId: number, @Body() supplyPoint: SupplyPointEntity): Promise<SupplyPointRO> {
     return this.supplyPointsService.create(userId, supplyPoint);
   }
 
   @Put(':id')
+  @UseGuards(new AuthGuard())
   @UsePipes(new ValidationPipe())
   async update(@User('id') userId: number, @Param('id') id, @Body() supplyPoint: SupplyPointEntity): Promise<SupplyPointRO> {
     return this.supplyPointsService.update(userId, supplyPoint);
   }
 
   @Delete(':id')
+  @UseGuards(new AuthGuard())
   remove(@User('id') userId: number, @Param('id') id) {
     return this.supplyPointsService.delete(userId, id);
   }
